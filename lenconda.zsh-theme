@@ -1,11 +1,17 @@
 # The prompt
-PROMPT='$(_user_host)$(_python_venv)%c $(git_prompt_info)%{$reset_color%}% $ '
+PROMPT='$(_user_host)$(_python_venv)%c $(_git_prompt)%{$reset_color%}% $ '
 # PROMPT='$(whoami)%c $(git_prompt_info)%{$reset_color%}%% '
 
 # Prompt with SHA
 # PROMPT='$(_user_host)$(_python_venv)%{$fg[cyan]%}%c $(git_prompt_info)%{$reset_color%}$(git_prompt_short_sha)%{$fg[magenta]%}$(_git_time_since_commit)$(git_prompt_status)${_return_status}➜ '
 
 local _return_status="%{$fg[red]%}%(?..⍉ )%{$reset_color%}"
+
+function _git_prompt() {
+  if [[ $(git_prompt_info) ]]; then
+    echo "($(git_prompt_info)%{$reset_color%}) "
+  fi
+}
 
 function _user_host() {
   if [[ $(who am i) =~ \([-a-zA-Z0-9\.]+\) ]]; then
@@ -31,17 +37,17 @@ function _python_venv() {
 ZSH_THEME_GIT_PROMPT_SHA_BEFORE="%{$fg[yellow]%}"
 ZSH_THEME_GIT_PROMPT_SHA_AFTER="%{$reset_color%} "
 
-ZSH_THEME_GIT_PROMPT_PREFIX="%{$fg[green]%}"
+ZSH_THEME_GIT_PROMPT_PREFIX="%{$reset_color%}"
 ZSH_THEME_GIT_PROMPT_SUFFIX="%{$reset_color%}"
-ZSH_THEME_GIT_PROMPT_DIRTY=" %{$fg[red]%}✗%{$reset_color%} "
-ZSH_THEME_GIT_PROMPT_UNTRACKED="%{$fg[white]%}◒ "
-ZSH_THEME_GIT_PROMPT_CLEAN=" "
-ZSH_THEME_GIT_PROMPT_ADDED="%{$fg[cyan]%}✓ "
-ZSH_THEME_GIT_PROMPT_MODIFIED="%{$fg[yellow]%}△ "
-ZSH_THEME_GIT_PROMPT_DELETED="%{$fg[red]%}✖ "
-ZSH_THEME_GIT_PROMPT_RENAMED="%{$fg[blue]%}➜ "
-ZSH_THEME_GIT_PROMPT_UNMERGED="%{$fg[cyan]%}§ "
-ZSH_THEME_GIT_PROMPT_AHEAD="%{$fg[blue]%}▲ "
+ZSH_THEME_GIT_PROMPT_DIRTY=" ✗%{$reset_color%}"
+#ZSH_THEME_GIT_PROMPT_UNTRACKED="%{$fg[white]%}◒ "
+#ZSH_THEME_GIT_PROMPT_CLEAN=" "
+#ZSH_THEME_GIT_PROMPT_ADDED="%{$fg[cyan]%}✓ "
+#ZSH_THEME_GIT_PROMPT_MODIFIED="%{$fg[yellow]%}△ "
+#ZSH_THEME_GIT_PROMPT_DELETED="%{$fg[red]%}✖ "
+#ZSH_THEME_GIT_PROMPT_RENAMED="%{$fg[blue]%}➜ "
+#ZSH_THEME_GIT_PROMPT_UNMERGED="%{$fg[cyan]%}§ "
+#ZSH_THEME_GIT_PROMPT_AHEAD="%{$fg[blue]%}▲ "
 
 ZSH_THEME_GIT_TIME_SINCE_COMMIT_SHORT="%{$fg[white]%}"
 ZSH_THEME_GIT_TIME_SHORT_COMMIT_MEDIUM="%{$fg[yellow]%}"
